@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Adventure Escape SA",
+    "slug": "sme-adventures-booking",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/adventure-escape-splash.png",
+    "scheme": "smeadventuresbooking",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#C9B5B4",
+        "foregroundImage": "./assets/images/adventure-escape-logo.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/adventure-escape-splash.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/adventure-escape-splash.png",
+          "imageWidth": 320,
+          "resizeMode": "contain",
+          "backgroundColor": "#C9B5B4"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
