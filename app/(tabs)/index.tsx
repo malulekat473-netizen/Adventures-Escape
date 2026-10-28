@@ -11,12 +11,18 @@ export default function HomeScreen() {
     <Page title="Make room for outside." eyebrow="SME ADVENTURES / SOUTH AFRICA">
       <Photo uri={COURSES[0].image} height={340}>
         <View style={styles.heroShade} />
-        <Text style={styles.heroKicker}>YOUR NEXT STORY STARTS HERE</Text>
-        <Text style={styles.heroTitle}>Find your wild.</Text>
+        <Text style={styles.heroKicker}>OUR SLOGAN</Text>
+        <Text style={styles.heroSlogan}>
+          <Text style={styles.sloganFirst}>If you enjoy Nature,</Text>
+          {'\n'}
+          <Text style={styles.sloganSecond}>then bring along the</Text>
+          {'\n'}
+          <Text style={styles.sloganThird}>Adventure.</Text>
+        </Text>
       </Photo>
       <Text style={styles.intro}>Big views, good people, and the kind of day you talk about long after you get home.</Text>
       <Button label="EXPLORE THE COURSES" href="/courses" />
-      <Button label={`REVIEW YOUR SELECTION · ${selected.length}`} href="/quote" secondary />
+      <Button label={`REVIEW YOUR SELECTION ï¿½ ${selected.length}`} href="/quote" secondary />
       <SectionLabel>OUT THERE, YOUR WAY</SectionLabel>
       <View style={styles.tiles}>
         {COURSES.slice(0, 3).map((course) => <Link href={`/course/${course.slug}`} asChild key={course.slug}>
@@ -29,7 +35,8 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  heroShade: {...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,1,3,0.3)' }, heroKicker: { color: colors.tan, fontWeight: '900', fontSize: 10, letterSpacing: 1.6 }, heroTitle: { color: colors.white, fontSize: 38, fontWeight: '900', marginTop: 7 },
+  heroShade: {...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,1,3,0.48)' }, heroKicker: { color: colors.tan, fontWeight: '900', fontSize: 10, letterSpacing: 1.6, marginBottom: 8 }, heroSlogan: { fontSize: 27, lineHeight: 34, fontWeight: '900' },
+  sloganFirst: { color: colors.white }, sloganSecond: { color: colors.tan }, sloganThird: { color: colors.orange },
   intro: { fontSize: 18, lineHeight: 28, fontWeight: '700', color: colors.espresso, marginVertical:14 }, tiles: { gap: 1, marginTop: 7, backgroundColor: colors.line },
   tile: { backgroundColor: colors.white, padding: 17 }, tileTag: { color: colors.orange, fontSize: 9, fontWeight: '900', letterSpacing: 1.2 }, tileTitle: { color: colors.espresso, fontSize: 18, fontWeight: '900', marginTop: 6 }, tileFee: { color: colors.espresso, fontWeight: '800', marginTop: 11 },tilePer: { color: colors.muted, fontWeight: '400', fontSize: 12 },
   band: { marginHorizontal: -22, marginTop: 28, paddingHorizontal: 22, paddingVertical: 26, backgroundColor: colors.tan }, bandLabel: { color: colors.espresso, fontWeight: '900', fontSize: 10, letterSpacing: 1.4 }, bandTitle: { color: colors.espresso, fontWeight: '900', fontSize: 24, marginTop: 8 },});

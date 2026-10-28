@@ -18,7 +18,10 @@ export function Page({ children, title, eyebrow, dark = false }: React.PropsWith
         <Text style={StyleSheet.flatten([styles.pageTitle, dark && styles.lightText])}>{title}</Text>
         {children}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>SME ADVENTURES  ·  GET OUT THERE</Text>
+          <View style={styles.footerBrand}>
+            <Text style={styles.footerText}>SME ADVENTURES</Text>
+            <Text style={styles.footerSlogan}>If you enjoy Nature, then bring along the Adventure.</Text>
+          </View>
           <Pressable onPress={() => Linking.openURL(`tel:${contact.phone}`)}><Text style={styles.footerLink}>{contact.phone}</Text></Pressable>
         </View>
       </ScrollView>
@@ -32,8 +35,9 @@ export function Header({ dark = false }: { dark?: boolean }) {
   return (
     <View style={StyleSheet.flatten([styles.header, dark && styles.headerDark])}>
       <Link href="/" asChild>
-        <Pressable accessibilityLabel="Adventure Escape SA home">
+        <Pressable accessibilityLabel="Adventure Escape SA home" style={styles.brand}>
           <Image source={require('../assets/images/adventure-escape-logo.png')} accessibilityLabel="Adventure Escape SA" resizeMode="contain" style={styles.logo} />
+          <Text style={StyleSheet.flatten([styles.brandName, dark && styles.lightText])}>Adventure Escape SA</Text>
         </Pressable>
       </Link>
       <Pressable accessibilityRole="button" accessibilityLabel="Open navigation" onPress={() => setOpen(!open)} style={StyleSheet.flatten([styles.menuButton, dark && styles.menuButtonDark])}>
@@ -82,7 +86,7 @@ export function Field({ label, value, onChangeText, placeholder, keyboardType, m
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.paper }, safeDark: { backgroundColor: colors.espresso },
   header: { height: 62, paddingHorizontal: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: colors.paper, zIndex: 20 },
-  headerDark: { backgroundColor: colors.espresso }, logo: { width: 94, height: 56 },
+  headerDark: { backgroundColor: colors.espresso }, brand: { flexDirection: 'row', alignItems: 'center', gap: 8 }, logo: { width: 62, height: 54 }, brandName: { color: colors.espresso, fontSize: 13, fontWeight: '900' },
   menuButton: { borderWidth: 1, borderColor: colors.line, paddingVertical: 10, paddingHorizontal: 13, borderRadius: 4 }, menuButtonDark: { borderColor: '#66534D' }, menuButtonText: { fontSize: 11, fontWeight: '800', color: colors.espresso, letterSpacing: 0.5 },
   dropdown: { position: 'absolute', right: 16, top: 56, width: 230, paddingVertical: 7, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, borderRadius: 4, shadowColor: colors.black, shadowOpacity: 0.18, shadowRadius: 12, elevation: 10 },
   menuItem: { paddingHorizontal: 16, paddingVertical: 12 }, menuItemActive: { backgroundColor: '#FCE6DC' }, menuItemText: { color: colors.espresso, fontWeight: '600', fontSize: 14 }, menuItemTextActive: { color: colors.orange },
@@ -91,5 +95,5 @@ const styles = StyleSheet.create({
   button: { backgroundColor: colors.orange, borderRadius: 4, paddingVertical: 15, paddingHorizontal: 17, minHeight: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 13 }, buttonSecondary: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.espresso }, buttonCompact: { paddingVertical: 10, minHeight: 42, marginTop: 8 }, buttonText: { color: colors.black, fontSize: 13, fontWeight: '900' }, buttonTextSecondary: { color: colors.espresso }, buttonArrow: { fontSize: 18, fontWeight: '700', color: colors.black },
   photo: { width: '100%', justifyContent: 'flex-end', padding: 18, marginVertical: 12, overflow: 'hidden', backgroundColor: colors.stone }, photoImage: { borderRadius: 4 },
   fieldWrap: { marginBottom: 15 }, fieldLabel: { color: colors.espresso, fontSize: 12, fontWeight: '800', marginBottom: 7 }, input: { minHeight: 48, borderWidth: 1, borderColor: colors.line, borderRadius: 4, paddingHorizontal: 13, color: colors.black, backgroundColor: colors.white, fontSize: 15 }, inputMultiline: { minHeight: 100, paddingTop: 12, textAlignVertical: 'top' }, inputError: { borderColor: colors.danger }, errorText: { color: colors.danger, fontSize: 12, marginTop: 5 },
-  footer: { marginTop: 35, paddingTop: 18, borderTopWidth: 1, borderTopColor: colors.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, footerText: { color: colors.muted, fontSize: 9, fontWeight: '900', letterSpacing: 1 }, footerLink: { color: colors.orange, fontSize: 12, fontWeight: '800' },
+  footer: { marginTop: 35, paddingTop: 18, borderTopWidth: 1, borderTopColor: colors.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }, footerBrand: { flex: 1 }, footerText: { color: colors.muted, fontSize: 9, fontWeight: '900', letterSpacing: 1 }, footerSlogan: { color: colors.muted, fontSize: 10, lineHeight: 14, marginTop: 4 }, footerLink: { color: colors.orange, fontSize: 12, fontWeight: '800' },
 });

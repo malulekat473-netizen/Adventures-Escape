@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Adventure Escape SA",
+    "description": "If you enjoy Nature, then bring along the Adventure.",
     "slug": "sme-adventures-booking",
     "version": "1.0.0",
     "orientation": "portrait",
