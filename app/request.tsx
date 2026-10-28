@@ -1,9 +1,9 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Button, Field, Page, SectionLabel } from '../components/AppUI';
 import { useBooking } from '../src/booking';
-import { courses } from '../src/courses';
+import { COURSES } from '../src/courses';
 import { colors, money } from '../src/theme';
 
 export default function RequestScreen() {
@@ -27,9 +27,23 @@ export default function RequestScreen() {
   return <Page title="Tell us about your day." eyebrow="BOOKING / CONTACT REQUEST">
     <Text style={styles.intro}>Share a few details and we’ll get back to you with availability. This request is not a confirmed booking.</Text>
     <SectionLabel>YOUR COURSES</SectionLabel>
-    {courses.map((course) => {
+    {COURSES.map((course) => {
       const chosen = selected.includes(course.slug);
-      return <Text key={course.slug} onPress={() => toggleCourse(course.slug)} style={[styles.courseOption, chosen && styles.courseChosen]}>{chosen ? '☑  ' : '☐  '}{course.title}  ·  {money(course.fee)}</Text>;
+      return <Pressable
+        key={course.slug}
+        onPress={() => toggleCourse(course.slug)}
+        accessibilityRole="checkbox"
+        accessibilityState={{ checked: chosen }}
+        accessibilityLabel={`${course.title}, ${money(course.fee)} per person`}
+        style={[styles.courseOption, chosen && styles.courseChosen]}
+      >
+        <View style={[styles.check, chosen && styles.checkChosen]}><Text style={[styles.checkMark, chosen && styles.checkMarkChosen]}>{chosen ? '✓' : ''}</Text></View>
+        <View style={styles.courseDetails}>
+          <Text style={styles.courseTitle}>{course.title}</Text>
+          <Text style={styles.coursePrice}>{money(course.fee)} <Text style={styles.perPerson}>/ person</Text></Text>
+        </View>
+        <Text style={styles.courseTag}>{course.tag}</Text>
+      </Pressable>;
     })}
     {submitError ? <Text style={styles.error}>{submitError}</Text> : null}
     <SectionLabel>YOUR CONTACT DETAILS</SectionLabel>
@@ -46,4 +60,21 @@ export default function RequestScreen() {
   </Page>;
 }
 
-const styles = StyleSheet.create({ intro: { color: colors.muted, fontSize: 14, lineHeight: 22 }, courseOption: { padding: 12, marginBottom: 5, backgroundColor: colors.white, color: colors.espresso, fontWeight: '700', fontSize: 12, borderWidth: 1, borderColor: colors.line, borderRadius: 4 }, courseChosen: { borderColor: colors.orange, backgroundColor: '#FCE6DC' }, error: { color: colors.danger, fontSize: 13, fontWeight: '700', marginTop: 8 }, split: { flexDirection: 'row', gap: 12 }, half: { flex: 1 }, fine: { color: colors.muted, fontSize: 11, marginTop: 12 } });
+const styles = StyleSheet.create({
+  intro: { color: colors.muted, fontSize: 14, lineHeight: 22 },
+  courseOption: { minHeight: 68, flexDirection: 'row', alignItems: 'center', gap: 11, padding: 12, marginBottom: 8, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, borderRadius: 6 },
+  courseChosen: { borderColor: colors.orange, backgroundColor: '#FCE6DC' },
+  check: { width: 22, height: 22, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.line, borderRadius: 4, backgroundColor: colors.white },
+  checkChosen: { borderColor: colors.orange, backgroundColor: colors.orange },
+  checkMark: { color: colors.white, fontSize: 14, fontWeight: '900' },
+  checkMarkChosen: { color: colors.white },
+  courseDetails: { flex: 1 },
+  courseTitle: { color: colors.espresso, fontWeight: '800', fontSize: 13 },
+  coursePrice: { color: colors.orange, fontWeight: '900', fontSize: 12, marginTop: 4 },
+  perPerson: { color: colors.muted, fontWeight: '500', fontSize: 11 },
+  courseTag: { color: colors.muted, fontSize: 9, fontWeight: '900', letterSpacing: 0.5 },
+  error: { color: colors.danger, fontSize: 13, fontWeight: '700', marginTop: 8 },
+  split: { flexDirection: 'row', gap: 12 },
+  half: { flex: 1 },
+  fine: { color: colors.muted, fontSize: 11, marginTop: 12 },
+});

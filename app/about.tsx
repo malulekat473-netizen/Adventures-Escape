@@ -1,5 +1,4 @@
 import { Button, Body, Page, Photo, SectionLabel } from '../components/AppUI';
-import { courses } from '../src/courses';
 
 export default function AboutScreen() {
   return <Page title="Outside brings us together." eyebrow="A LITTLE ABOUT US">

@@ -2,12 +2,12 @@ import { useLocalSearchParams } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { Body, Button, Page, Photo, SectionLabel } from '../../components/AppUI';
 import { useBooking } from '../../src/booking';
-import { courses } from '../../src/courses';
+import { COURSES } from '../../src/courses';
 import { colors, money } from '../../src/theme';
 
 export default function CourseDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
-  const course = courses.find((item) => item.slug === slug);
+  const course = COURSES.find((item) => item.slug === slug);
   const { selected, toggleCourse } = useBooking();
   if (!course) return <Page title="Course not found"><Body>That course could not be found.</Body><Button label="BROWSE COURSES" href="/courses" /></Page>;
   const isSelected = selected.includes(course.slug);

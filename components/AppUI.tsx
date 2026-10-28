@@ -11,11 +11,11 @@ const menuItems = [
 
 export function Page({ children, title, eyebrow, dark = false }: React.PropsWithChildren<{ title: string; eyebrow?: string; dark?: boolean }>) {
   return (
-    <SafeAreaView style={[styles.safe, dark && styles.safeDark]} edges={['top', 'left', 'right']}>
+    <SafeAreaView style={StyleSheet.flatten([styles.safe, dark && styles.safeDark])} edges={['top', 'left', 'right']}>
       <Header dark={dark} />
       <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled">
         {eyebrow ? <Text style={styles.eyebrow}>{eyebrow}</Text> : null}
-        <Text style={[styles.pageTitle, dark && styles.lightText]}>{title}</Text>
+        <Text style={StyleSheet.flatten([styles.pageTitle, dark && styles.lightText])}>{title}</Text>
         {children}
         <View style={styles.footer}>
           <Text style={styles.footerText}>SME ADVENTURES  ·  GET OUT THERE</Text>
@@ -30,14 +30,20 @@ export function Header({ dark = false }: { dark?: boolean }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   return (
-    <View style={[styles.header, dark && styles.headerDark]}>
-      <Link href="/" asChild><Pressable accessibilityLabel="Adventure Escape SA home"><Image source={require('../assets/images/adventure-escape-logo.png')} accessibilityLabel="Adventure Escape SA" resizeMode="contain" style={styles.logo} /></Pressable></Link>
-      <Pressable accessibilityRole="button" accessibilityLabel="Open navigation" onPress={() => setOpen(!open)} style={[styles.menuButton, dark && styles.menuButtonDark]}>
-        <Text style={[styles.menuButtonText, dark && styles.lightText]}>{open ? 'CLOSE  ×' : 'MENU  ▾'}</Text>
+    <View style={StyleSheet.flatten([styles.header, dark && styles.headerDark])}>
+      <Link href="/" asChild>
+        <Pressable accessibilityLabel="Adventure Escape SA home">
+          <Image source={require('../assets/images/adventure-escape-logo.png')} accessibilityLabel="Adventure Escape SA" resizeMode="contain" style={styles.logo} />
+        </Pressable>
+      </Link>
+      <Pressable accessibilityRole="button" accessibilityLabel="Open navigation" onPress={() => setOpen(!open)} style={StyleSheet.flatten([styles.menuButton, dark && styles.menuButtonDark])}>
+        <Text style={StyleSheet.flatten([styles.menuButtonText, dark && styles.lightText])}>{open ? 'CLOSE  ×' : 'MENU  ▾'}</Text>
       </Pressable>
       {open ? <View style={styles.dropdown}>
-        {menuItems.map(([label, href]) => <Link href={href as never} asChild key={href}>
-          <Pressable onPress={() => setOpen(false)} style={[styles.menuItem, pathname === href && styles.menuItemActive]}><Text style={[styles.menuItemText, pathname === href && styles.menuItemTextActive]}>{label}</Text></Pressable>
+        {menuItems.map(([label, href]) => <Link href={href as never} asChild key={label}>
+          <Pressable onPress={() => setOpen(false)} style={StyleSheet.flatten([styles.menuItem, pathname === href && styles.menuItemActive])}>
+            <Text style={StyleSheet.flatten([styles.menuItemText, pathname === href && styles.menuItemTextActive])}>{label}</Text>
+          </Pressable>
         </Link>)}
       </View> : null}
     </View>
@@ -45,26 +51,30 @@ export function Header({ dark = false }: { dark?: boolean }) {
 }
 
 export function Button({ label, href, onPress, secondary = false, compact = false }: { label: string; href?: string; onPress?: () => void; secondary?: boolean; compact?: boolean }) {
-  const content = <View style={[styles.button, secondary && styles.buttonSecondary, compact && styles.buttonCompact]}><Text style={[styles.buttonText, secondary && styles.buttonTextSecondary]}>{label}</Text><Text style={[styles.buttonArrow, secondary && styles.buttonTextSecondary]}>↗</Text></View>;
+  const content = (
+    <View style={StyleSheet.flatten([styles.button, secondary && styles.buttonSecondary, compact && styles.buttonCompact])}>
+      <Text style={StyleSheet.flatten([styles.buttonText, secondary && styles.buttonTextSecondary])}>{label}</Text>
+      <Text style={StyleSheet.flatten([styles.buttonArrow, secondary && styles.buttonTextSecondary])}>↗</Text>
+    </View>
+  );
   if (href) return <Link href={href as never} asChild><Pressable>{content}</Pressable></Link>;
   return <Pressable onPress={onPress}>{content}</Pressable>;
 }
 
 export function Photo({ uri, height = 230, children }: React.PropsWithChildren<{ uri: ImageSourcePropType | string; height?: number }>) {
   const source = typeof uri === 'string' ? { uri } : uri;
-  return <ImageBackground source={source} imageStyle={styles.photoImage} style={[styles.photo, { height }]}>{children}</ImageBackground>;
+  return <ImageBackground source={source} imageStyle={styles.photoImage} style={StyleSheet.flatten([styles.photo, { height }])}>{children}</ImageBackground>;
 }
 
 export function SectionLabel({ children }: React.PropsWithChildren) { return <Text style={styles.sectionLabel}>{children}</Text>; }
-
-export function Body({ children, light = false }: React.PropsWithChildren<{ light?: boolean }>) { return <Text style={[styles.body, light && styles.bodyLight]}>{children}</Text>; }
+export function Body({ children, light = false }: React.PropsWithChildren<{ light?: boolean }>) { return <Text style={StyleSheet.flatten([styles.body, light && styles.bodyLight])}>{children}</Text>; }
 
 export function Field({ label, value, onChangeText, placeholder, keyboardType, multiline, error, autoCapitalize }: {
   label: string; value: string; onChangeText: (value: string) => void; placeholder?: string; keyboardType?: 'default' | 'email-address' | 'phone-pad' | 'numeric'; multiline?: boolean; error?: string; autoCapitalize?: 'none' | 'sentences' | 'words';
 }) {
   return <View style={styles.fieldWrap}>
     <Text style={styles.fieldLabel}>{label}</Text>
-    <TextInput value={value} onChangeText={onChangeText} placeholder={placeholder} placeholderTextColor={colors.muted} keyboardType={keyboardType} multiline={multiline} autoCapitalize={autoCapitalize} style={[styles.input, multiline && styles.inputMultiline, error && styles.inputError]} />
+    <TextInput value={value} onChangeText={onChangeText} placeholder={placeholder} placeholderTextColor={colors.muted} keyboardType={keyboardType} multiline={multiline} autoCapitalize={autoCapitalize} style={StyleSheet.flatten([styles.input, multiline && styles.inputMultiline, error && styles.inputError])} />
     {error ? <Text style={styles.errorText}>{error}</Text> : null}
   </View>;
 }

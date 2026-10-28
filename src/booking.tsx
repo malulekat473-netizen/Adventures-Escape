@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
-import { courses } from './courses';
+import { COURSES } from './courses';
 
 export type CustomerDetails = {
   name: string;
@@ -31,28 +31,35 @@ export function BookingProvider({ children }: React.PropsWithChildren) {
   const [customer, setCustomer] = useState<CustomerDetails>({ name: '', email: '', phone: '', date: '', guests: '1', message: '' });
 
   const totals = useMemo(() => {
-    const subtotal = courses.filter((course) => selected.includes(course.slug)).reduce((sum, course) => sum + course.fee, 0);
+    const subtotal = COURSES.filter((course) => selected.includes(course.slug)).reduce((sum, course) => sum + course.fee, 0);
     const rate = Math.min(100, Math.max(0, Number(discount) || 0));
     const discountAmount = subtotal * rate / 100;
     const vat = (subtotal - discountAmount) * 0.15;
     return { subtotal, discountAmount, vat, total: subtotal - discountAmount + vat };
   }, [selected, discount]);
 
-  const value = useMemo(() => ({
+  const toggleCourse = (slug: string) => {
+    setSelected(prev => prev.includes(slug)? prev.filter(s => s!== slug) : [...prev, slug]);
+  };
+
+  const value: BookingValue = {
     selected,
-    toggleCourse: (slug: string) => setSelected((items) => items.includes(slug) ? items.filter((item) => item !== slug) : [...items, slug]),
+    toggleCourse,
     discount,
     setDiscount,
     customer,
     setCustomer,
-    ...totals,
-  }), [selected, discount, customer, totals]);
+    subtotal: totals.subtotal,
+    discountAmount: totals.discountAmount,
+    vat: totals.vat,
+    total: totals.total,
+  };
 
   return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;
 }
 
 export function useBooking() {
-  const value = useContext(BookingContext);
-  if (!value) throw new Error('useBooking must be used inside BookingProvider');
-  return value;
+  const ctx = useContext(BookingContext);
+  if (!ctx) throw new Error('useBooking must be used within BookingProvider');
+  return ctx;
 }

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button, Page, SectionLabel } from '../components/AppUI';
 import { useBooking } from '../src/booking';
-import { courses } from '../src/courses';
+import { COURSES } from '../src/courses';
 import { colors, money } from '../src/theme';
 
 export default function QuoteScreen() {
@@ -15,12 +15,12 @@ export default function QuoteScreen() {
     if (value === '' || (/^\d+(\.\d{0,2})?$/.test(value) && Number(value) <= 100)) setDiscountError('');
     else setDiscountError('Enter a discount from 0 to 100%.');
   };
-  const chosen = courses.filter((course) => selected.includes(course.slug));
+  const chosen = COURSES.filter((course) => selected.includes(course.slug));
   return <Page title="Your quote, at a glance." eyebrow="NON-FORMAL QUOTE REVIEW">
     <View style={styles.notice}><Text style={styles.noticeTitle}>NON-FORMAL QUOTE</Text><Text style={styles.noticeBody}>For planning purposes only. This is not a tax invoice, offer, or confirmed booking. Fees and availability must be confirmed by SME Adventures.</Text></View>
     {customer.name ? <Text style={styles.customer}>Prepared for {customer.name}{customer.date ? `  ·  ${customer.date}` : ''}</Text> : null}
     <SectionLabel>SELECTED EXPERIENCES</SectionLabel>
-    {chosen.length ? chosen.map((course) => <View style={styles.line} key={course.slug}><Text style={styles.lineName}>{course.title}</Text><Text style={styles.linePrice}>{money(course.fee)}</Text></View>) : <Text style={styles.empty}>No courses selected yet. Browse the course line-up to start a quote.</Text>}
+    {chosen.length ? chosen.map((course) => <View style={styles.line} key={course.slug}><Text style={styles.lineName}>{course.title}</Text><Text style={styles.linePrice}>{money(course.fee)}</Text></View>) : <Text style={styles.empty}>No COURSES selected yet. Browse the course line-up to start a quote.</Text>}
     <Link href="/courses" asChild><Pressable><Text style={styles.change}>+ ADD OR CHANGE COURSES</Text></Pressable></Link>
     <SectionLabel>ESTIMATE BREAKDOWN</SectionLabel>
     <View style={styles.line}><Text style={styles.label}>Subtotal</Text><Text style={styles.value}>{money(subtotal)}</Text></View>

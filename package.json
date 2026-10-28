@@ -3,7 +3,8 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
-    "expo": "~57.0.26",
+    "@expo/ngrok": "^4.1.0",
+    "expo": "~57.0.24",
     "expo-constants": "~57.0.20",
     "expo-font": "~57.0.4",
     "expo-linking": "~57.0.11",
