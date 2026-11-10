@@ -5,6 +5,10 @@ import { useBooking } from '../../src/booking';
 import { COURSES } from '../../src/courses';
 import { colors, money } from '../../src/theme';
 
+export function generateStaticParams() {
+  return COURSES.map((course) => ({ slug: course.slug }));
+}
+
 export default function CourseDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const course = COURSES.find((item) => item.slug === slug);

@@ -31,6 +31,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "build": "expo export --platform web",
     "typecheck": "tsc --noEmit"
   },
   "private": true
