@@ -6,6 +6,8 @@ export default function AboutScreen() {
     <SectionLabel>OUR SLOGAN</SectionLabel>
     <Body>If you enjoy Nature, then bring along the Adventure.</Body>
     <Body>SME Adventures is built around a simple idea: shared experiences make the best memories. We bring people into the outdoors for guided days that are active, welcoming and grounded in safety.</Body>
+    <SectionLabel>OUR STORY</SectionLabel>
+    <Body>Founded by Laim Daniels, SME Adventures began in 2024 with a vision to help people make lasting memories outdoors.</Body>
     <SectionLabel>WHAT MATTERS TO US</SectionLabel>
     <Body>Good guides. Thoughtful preparation. Room for every kind of adventurer. Whether you come as a family, a team or a group of friends, we help make getting outside feel easy.</Body>
     <Button label="FIND YOUR ADVENTURE" href="/courses" />
