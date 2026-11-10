@@ -1,4 +1,4 @@
-import { ImageBackground, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Link } from 'expo-router';
 import { Button, Page, Photo, SectionLabel } from '../../components/AppUI';
 import { COURSES } from '../../src/courses';
@@ -10,13 +10,12 @@ export default function HomeScreen() {
   const { width } = useWindowDimensions();
   const wideLayout = width >= 760;
   return (
-    <Page title="Make room for outside." eyebrow="SME ADVENTURES / SOUTH AFRICA" showTitle={false}>
-      <Photo uri={COURSES[2].image} height={wideLayout ? 480 : 390}>
+    <Page title="Make room for outside." eyebrow="SME ADVENTURES / SOUTH AFRICA">
+      <Photo uri={require('../../assets/images/ultimate-adventure-image.jpg')} height={wideLayout ? 440 : 390}>
         <View style={styles.heroShade} />
         <View style={styles.heroContent}>
-          <Text style={styles.heroKicker}>SOUTH AFRICA · YOUR NEXT GREAT DAY OUT</Text>
-          <Text accessibilityRole="header" style={wideLayout ? styles.heroTitleWide : styles.heroTitle}>Make room for{'\n'}outside.</Text>
-          <Text style={styles.heroSlogan}>If you enjoy nature, then bring along the adventure.</Text>
+          <Text style={styles.heroKicker}>NEXT STORY STARTS HERE</Text>
+          <Text accessibilityRole="header" style={wideLayout ? styles.heroTitleWide : styles.heroTitle}>Find your wild.</Text>
         </View>
       </Photo>
       <Text style={styles.intro}>Big views, good people, and the kind of day you talk about long after you get home.</Text>
@@ -28,12 +27,11 @@ export default function HomeScreen() {
       <View style={[styles.tiles, wideLayout && styles.tilesWide]}>
         {COURSES.slice(0, 3).map((course) => <Link href={`/course/${course.slug}`} asChild key={course.slug}>
           <Pressable style={[styles.tile, wideLayout && styles.tileWide]}>
-            <ImageBackground source={course.image} resizeMode="cover" style={styles.tileImage} imageStyle={styles.tileImageShape}>
-              <View style={styles.tileShade} />
+            <View style={styles.tileContent}>
               <Text style={styles.tileTag}>{course.tag}</Text>
               <Text style={styles.tileTitle}>{course.title}</Text>
               <Text style={styles.tileFee}>{money(course.fee)} <Text style={styles.tilePer}>/ person</Text></Text>
-            </ImageBackground>
+            </View>
           </Pressable>
         </Link>)}
       </View>
@@ -49,28 +47,25 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  heroShade: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(20, 15, 11, 0.48)' },
-  heroContent: { maxWidth: 680, paddingBottom: 14 },
-  heroKicker: { color: '#F6C79F', fontWeight: '900', fontSize: 11, letterSpacing: 1.5, marginBottom: 14 },
-  heroTitle: { color: colors.white, fontSize: 34, lineHeight: 40, fontWeight: '900', letterSpacing: -0.8 },
-  heroTitleWide: { color: colors.white, fontSize: 48, lineHeight: 54, fontWeight: '900', letterSpacing: -1.2 },
-  heroSlogan: { color: colors.white, fontSize: 17, lineHeight: 25, marginTop: 16, maxWidth: 440 },
+  heroShade: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(20, 15, 11, 0.12)' },
+  heroContent: { maxWidth: 680, paddingBottom: 8 },
+  heroKicker: { color: colors.white, fontWeight: '900', fontSize: 10, letterSpacing: 1.6, marginBottom: 8 },
+  heroTitle: { color: colors.white, fontSize: 38, lineHeight: 44, fontWeight: '900', letterSpacing: -0.8 },
+  heroTitleWide: { color: colors.white, fontSize: 46, lineHeight: 52, fontWeight: '900', letterSpacing: -1.2 },
   intro: { maxWidth: 670, fontSize: 19, lineHeight: 29, fontWeight: '600', color: colors.espresso, marginVertical: 18 },
   actions: { gap: 0 },
   actionsWide: { maxWidth: 640, flexDirection: 'row', gap: 12 },
   actionItem: { width: '100%' },
   actionItemWide: { flex: 1 },
-  tiles: { gap: 14, marginTop: 7 },
+  tiles: { gap: 1, marginTop: 7, backgroundColor: colors.line },
   tilesWide: { flexDirection: 'row' },
-  tile: { width: '100%', overflow: 'hidden', borderRadius: 8 },
+  tile: { width: '100%', backgroundColor: colors.white },
   tileWide: { flex: 1 },
-  tileImage: { height: 230, justifyContent: 'flex-end', padding: 19, overflow: 'hidden', backgroundColor: colors.stone },
-  tileImageShape: { borderRadius: 8 },
-  tileShade: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(20, 15, 11, 0.42)' },
-  tileTag: { color: '#F6C79F', fontSize: 10, fontWeight: '900', letterSpacing: 1.2 },
-  tileTitle: { color: colors.white, fontSize: 20, fontWeight: '900', marginTop: 7 },
-  tileFee: { color: colors.white, fontWeight: '800', marginTop: 9 },
-  tilePer: { color: colors.white, fontWeight: '400', fontSize: 12 },
+  tileContent: { padding: 18 },
+  tileTag: { color: colors.orange, fontSize: 10, fontWeight: '900', letterSpacing: 1.2 },
+  tileTitle: { color: colors.espresso, fontSize: 19, fontWeight: '900', marginTop: 7 },
+  tileFee: { color: colors.espresso, fontWeight: '800', marginTop: 10 },
+  tilePer: { color: colors.muted, fontWeight: '400', fontSize: 12 },
   band: { marginTop: 46, padding: 26, backgroundColor: '#E8D6C1', borderRadius: 8 },
   bandCopy: { marginBottom: 8 },
   bandButton: { width: '100%', maxWidth: 240 },
