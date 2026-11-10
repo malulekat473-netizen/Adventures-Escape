@@ -9,13 +9,13 @@ const menuItems = [
   ['Quote review', '/quote'], ['Venue & directions', '/venue'], ['Safety & preparation', '/safety'], ['Gallery', '/gallery'], ['FAQs', '/faq'], ['Contact', '/contact'],
 ] as const;
 
-export function Page({ children, title, eyebrow, dark = false }: React.PropsWithChildren<{ title: string; eyebrow?: string; dark?: boolean }>) {
+export function Page({ children, title, eyebrow, dark = false, showTitle = true }: React.PropsWithChildren<{ title: string; eyebrow?: string; dark?: boolean; showTitle?: boolean }>) {
   return (
     <SafeAreaView style={StyleSheet.flatten([styles.safe, dark && styles.safeDark])} edges={['top', 'left', 'right']}>
       <Header dark={dark} />
       <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled">
         {eyebrow ? <Text style={styles.eyebrow}>{eyebrow}</Text> : null}
-        <Text style={StyleSheet.flatten([styles.pageTitle, dark && styles.lightText])}>{title}</Text>
+        {showTitle ? <Text accessibilityRole="header" style={StyleSheet.flatten([styles.pageTitle, dark && styles.lightText])}>{title}</Text> : null}
         {children}
         <View style={styles.footer}>
           <View style={styles.footerBrand}>
@@ -84,16 +84,16 @@ export function Field({ label, value, onChangeText, placeholder, keyboardType, m
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.paper }, safeDark: { backgroundColor: colors.espresso },
-  header: { height: 62, paddingHorizontal: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: colors.paper, zIndex: 20 },
+  safe: { flex: 1, width: '100%', backgroundColor: colors.paper }, safeDark: { backgroundColor: colors.espresso },
+  header: { width: '100%', maxWidth: 1180, height: 72, paddingHorizontal: 26, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: colors.paper, zIndex: 20 },
   headerDark: { backgroundColor: colors.espresso }, brand: { flexDirection: 'row', alignItems: 'center', gap: 8 }, logo: { width: 62, height: 54 }, brandName: { color: colors.espresso, fontSize: 13, fontWeight: '900' },
   menuButton: { borderWidth: 1, borderColor: colors.line, paddingVertical: 10, paddingHorizontal: 13, borderRadius: 4 }, menuButtonDark: { borderColor: '#66534D' }, menuButtonText: { fontSize: 11, fontWeight: '800', color: colors.espresso, letterSpacing: 0.5 },
   dropdown: { position: 'absolute', right: 16, top: 56, width: 230, paddingVertical: 7, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, borderRadius: 4, shadowColor: colors.black, shadowOpacity: 0.18, shadowRadius: 12, elevation: 10 },
   menuItem: { paddingHorizontal: 16, paddingVertical: 12 }, menuItemActive: { backgroundColor: '#FCE6DC' }, menuItemText: { color: colors.espresso, fontWeight: '600', fontSize: 14 }, menuItemTextActive: { color: colors.orange },
-  page: { paddingHorizontal: 22, paddingTop: 28, paddingBottom: 38 }, eyebrow: { color: colors.orange, fontSize: 11, fontWeight: '900', letterSpacing: 1.7, marginBottom: 10 }, pageTitle: { color: colors.espresso, fontSize: 34, lineHeight: 39, fontWeight: '900', marginBottom: 19 }, lightText: { color: colors.paper },
+  page: { width: '100%', maxWidth: 1180, alignSelf: 'center', paddingHorizontal: 26, paddingTop: 34, paddingBottom: 48 }, eyebrow: { color: colors.orange, fontSize: 11, fontWeight: '900', letterSpacing: 1.7, marginBottom: 10 }, pageTitle: { color: colors.espresso, fontSize: 38, lineHeight: 44, fontWeight: '900', marginBottom: 22 }, lightText: { color: colors.paper },
   body: { color: colors.muted, fontSize: 15, lineHeight: 24 }, bodyLight: { color: colors.stone }, sectionLabel: { color: colors.orange, fontSize: 11, fontWeight: '900', letterSpacing: 1.4, marginTop: 20, marginBottom: 11 },
   button: { backgroundColor: colors.orange, borderRadius: 4, paddingVertical: 15, paddingHorizontal: 17, minHeight: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 13 }, buttonSecondary: { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.espresso }, buttonCompact: { paddingVertical: 10, minHeight: 42, marginTop: 8 }, buttonText: { color: colors.black, fontSize: 13, fontWeight: '900' }, buttonTextSecondary: { color: colors.espresso }, buttonArrow: { fontSize: 18, fontWeight: '700', color: colors.black },
-  photo: { width: '100%', justifyContent: 'flex-end', padding: 18, marginVertical: 12, overflow: 'hidden', backgroundColor: colors.stone }, photoImage: { borderRadius: 4 },
+  photo: { width: '100%', justifyContent: 'flex-end', padding: 28, marginVertical: 12, overflow: 'hidden', backgroundColor: colors.stone }, photoImage: { borderRadius: 8 },
   fieldWrap: { marginBottom: 15 }, fieldLabel: { color: colors.espresso, fontSize: 12, fontWeight: '800', marginBottom: 7 }, input: { minHeight: 48, borderWidth: 1, borderColor: colors.line, borderRadius: 4, paddingHorizontal: 13, color: colors.black, backgroundColor: colors.white, fontSize: 15 }, inputMultiline: { minHeight: 100, paddingTop: 12, textAlignVertical: 'top' }, inputError: { borderColor: colors.danger }, errorText: { color: colors.danger, fontSize: 12, marginTop: 5 },
-  footer: { marginTop: 35, paddingTop: 18, borderTopWidth: 1, borderTopColor: colors.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }, footerBrand: { flex: 1 }, footerText: { color: colors.muted, fontSize: 9, fontWeight: '900', letterSpacing: 1 }, footerSlogan: { color: colors.muted, fontSize: 10, lineHeight: 14, marginTop: 4 }, footerLink: { color: colors.orange, fontSize: 12, fontWeight: '800' },
+  footer: { marginTop: 52, paddingTop: 24, borderTopWidth: 1, borderTopColor: colors.line, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }, footerBrand: { flex: 1 }, footerText: { color: colors.muted, fontSize: 10, fontWeight: '900', letterSpacing: 1 }, footerSlogan: { color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 5 }, footerLink: { color: colors.orange, fontSize: 14, fontWeight: '800' },
 });
